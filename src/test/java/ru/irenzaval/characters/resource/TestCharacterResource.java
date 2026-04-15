@@ -73,7 +73,7 @@ public class TestCharacterResource extends JerseyTest {
     void getByIdShouldReturnCharacter() {
         Character character = service.create("Test", "Mage");
 
-        Response response = target("/characters/" + character.id)
+        Response response = target("/characters/" + character.getId())
                 .request()
                 .get();
 

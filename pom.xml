@@ -95,7 +95,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <mainClass>com.example.orders.config.Main</mainClass>
+                    <mainClass>ru.irenzaval.characters.config.Main</mainClass>
                 </configuration>
             </plugin>
 

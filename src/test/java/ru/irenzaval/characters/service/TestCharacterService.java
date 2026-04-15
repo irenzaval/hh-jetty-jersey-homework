@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import ru.irenzaval.characters.model.Character;
 import ru.irenzaval.characters.repository.CharacterRepository;
 
+import jakarta.ws.rs.NotFoundException;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,9 +41,9 @@ public class TestCharacterService {
         Character character = service.create("Arthas", "Warrior");
 
         assertNotNull(character);
-        assertEquals("Arthas", character.name);
-        assertEquals("Warrior", character.characterClass);
-        assertEquals(1, character.level);
+        assertEquals("Arthas", character.getName());
+        assertEquals("Warrior", character.getCharacterClass());
+        assertEquals(1, character.getLevel());
     }
 
     @Test
@@ -58,19 +60,29 @@ public class TestCharacterService {
     void getByIdShouldReturnCharacter() {
         Character created = service.create("Hero", "Mage");
 
-        Character found = service.getById(created.id);
+        Character found = service.getById(created.getId());
 
         assertNotNull(found);
-        assertEquals(created.id, found.id);
+        assertEquals(created.getId(), found.getId());
     }
 
     @Test
     void levelUpShouldIncreaseLevel() {
         Character character = service.create("Hero", "Warrior");
 
-        Character updated = service.levelUp(character.id);
+        Character updated = service.levelUp(character.getId());
 
-        assertEquals(2, updated.level);
-        assertEquals(100, updated.experience);
+        assertEquals(2, updated.getLevel());
+        assertEquals(100, updated.getExperience());
+    }
+
+    @Test
+    void getByIdShouldThrowIfNotFound() {
+        assertThrows(NotFoundException.class, () -> service.getById(999));
+    }
+
+    @Test
+    void levelUpShouldThrowIfNotFound() {
+        assertThrows(NotFoundException.class, () -> service.levelUp(999));
     }
 }

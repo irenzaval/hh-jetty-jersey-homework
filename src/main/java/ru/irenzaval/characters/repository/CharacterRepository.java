@@ -16,11 +16,11 @@ public class CharacterRepository {
 
     private Character map(java.sql.ResultSet rs) throws java.sql.SQLException {
         Character character = new Character();
-        character.id = rs.getInt("id");
-        character.name = rs.getString("name");
-        character.characterClass = rs.getString("characterClass");
-        character.level = rs.getInt("level");
-        character.experience = rs.getInt("experience");
+        character.setId(rs.getInt("id"));
+        character.setName(rs.getString("name"));
+        character.setCharacterClass(rs.getString("characterClass"));
+        character.setLevel(rs.getInt("level"));
+        character.setExperience(rs.getInt("experience"));
         return character;
     }
 
@@ -63,7 +63,7 @@ public class CharacterRepository {
                 .bind("id", id)
                 .map((rs, ctx) -> map(rs))
                 .findOne()
-                .orElseThrow(() -> new RuntimeException("Character not found")));
+                .orElse(null));
     }
 
     public Character levelUp(int id) {

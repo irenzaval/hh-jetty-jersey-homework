@@ -38,9 +38,9 @@ class TestCharacterRepository {
         Character character = repository.create("Arthas", "Warrior");
 
         assertNotNull(character);
-        assertEquals("Arthas", character.name);
-        assertEquals("Warrior", character.characterClass);
-        assertEquals(1, character.level);
+        assertEquals("Arthas", character.getName());
+        assertEquals("Warrior", character.getCharacterClass());
+        assertEquals(1, character.getLevel());
     }
 
     @Test
@@ -57,28 +57,26 @@ class TestCharacterRepository {
     void getByIdShouldReturnCharacter() {
         Character created = repository.create("Test", "Mage");
 
-        Character found = repository.getById(created.id);
+        Character found = repository.getById(created.getId());
 
         assertNotNull(found);
-        assertEquals(created.id, found.id);
+        assertEquals(created.getId(), found.getId());
     }
 
     @Test
-    void getByIdShouldThrowException_ifNotFound() {
-        RuntimeException ex = assertThrows(
-                RuntimeException.class,
-                () -> repository.getById(999));
+    void getByIdShouldReturnNullifNotFound() {
+        Character character = repository.getById(999);
 
-        assertEquals("Character not found", ex.getMessage());
+        assertNull(character);
     }
 
     @Test
     void levelUpShouldIncreaseLevel() {
         Character character = repository.create("Hero", "Warrior");
 
-        Character updated = repository.levelUp(character.id);
+        Character updated = repository.levelUp(character.getId());
 
-        assertEquals(2, updated.level);
-        assertEquals(100, updated.experience);
+        assertEquals(2, updated.getLevel());
+        assertEquals(100, updated.getExperience());
     }
 }

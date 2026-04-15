@@ -8,9 +8,9 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 
-import ru.irenzaval.characters.model.Character;
+import ru.irenzaval.characters.exception.GlobalExceptionMapper;
+import ru.irenzaval.characters.filter.RequestLoggingFilter;
 import ru.irenzaval.characters.repository.CharacterRepository;
 import ru.irenzaval.characters.resource.CharacterResource;
 import ru.irenzaval.characters.service.CharacterService;
@@ -20,7 +20,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Jdbi jdbi = Jdbi.create("jdbc:h2:./characterdb");
-        jdbi.registerRowMapper(BeanMapper.factory(Character.class));
 
         jdbi.useHandle(handle -> handle.execute("""
                         CREATE TABLE IF NOT EXISTS characters(
@@ -39,9 +38,10 @@ public class Main {
 
         ServletContextHandler context = new ServletContextHandler(server, "/");
 
-        ResourceConfig config = new ResourceConfig();
-
-        config.register(new CharacterResource(service));
+        ResourceConfig config = new ResourceConfig()
+        .register(new CharacterResource(service))
+        .register(RequestLoggingFilter.class)
+        .register(GlobalExceptionMapper.class);
 
         ServletHolder servletHolder = new ServletHolder();
         servletHolder.setServlet(new ServletContainer(config));

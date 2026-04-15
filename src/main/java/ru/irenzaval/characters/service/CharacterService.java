@@ -23,18 +23,19 @@ public class CharacterService {
     }
 
     public Character getById(int id) {
+        return getExistingCharacter(id);
+    }
+
+    public Character levelUp(int id) {
+        getExistingCharacter(id);
+        return repository.levelUp(id);
+    }
+
+    private Character getExistingCharacter(int id) {
         Character character = repository.getById(id);
         if (character == null) {
             throw new NotFoundException("Character not found");
         }
         return character;
-    }
-
-    public Character levelUp(int id) {
-        Character character = repository.getById(id);
-        if (character == null) {
-            throw new NotFoundException("Character not found");
-        }
-        return repository.levelUp(id);
     }
 }
