@@ -1,0 +1,29 @@
+# ===== Maven =====
+target/
+
+# ===== IntelliJ IDEA =====
+.idea/
+*.iml
+out/
+
+# ===== VS Code =====
+.vscode/
+
+# ===== Logs =====
+*.log
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== H2 Database =====
+*.db
+*.mv.db
+*.trace.db
+
+# ===== Temp files =====
+*.tmp
+*.swp
+
+# ===== Build artifacts =====
+*.classs

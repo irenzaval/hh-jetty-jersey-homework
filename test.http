@@ -1,0 +1,17 @@
+### Create character
+POST http://localhost:8080/characters
+Content-Type: application/json
+
+{
+  "name": "Arthas",
+  "characterClass": "Warrior"
+}
+
+### Get all characters
+GET http://localhost:8080/characters
+
+### Get character by id
+GET http://localhost:8080/characters/2
+
+### Level up character
+POST http://localhost:8080/characters/4/level-up
